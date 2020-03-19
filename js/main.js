@@ -1,10 +1,6 @@
 'use strict'
-//TODO: hint
-
-//TODO: Bonus: keep score (timer) 
 //TODO: Bonus: Add support for “LIVES”: 3
 //TODO: Bonus: Keep the best score in local storage (per level) and show it on the page 
-//TODO: (on win/loss for mines💣)
 
 //TODO: for me: on key down 😖 
 
@@ -18,8 +14,20 @@ var gIsWinInFirstClick;
 var gIsFirstClick;
 var gHintCount;
 var gHint;
+var gInterClock;
+var gElTime = document.querySelector('.time');
+var gSec;
+var gTenSec;
+var gMin;
+var gTenMin;
 
 function init() {
+    clearInterval(gInterClock);
+    gSec = 0;
+    gTenSec = 0;
+    gMin = 0;
+    gTenMin = 0;
+    gElTime.innerText = '00:00';
     gHint = false;
     gHintCount = 3;
     gIsFirstClick = true;
@@ -29,7 +37,6 @@ function init() {
     gEmptyCellCounter = 0;
     var elResetButton = document.querySelector('.restart-button');
     elResetButton.innerText = '😊';
-    // findMine(gBoard);
     render(gBoard)
 }
 
@@ -84,6 +91,7 @@ function findMine(board) {
 
 // the cell button onClick function
 function clicked(elCell, i, j) {
+    if (gIsFirstClick) clock();
     if (!gBoard[i][j].isFlag) {
         if (!gHint) {
             if (gBoard[i][j].isMine) {
@@ -201,6 +209,7 @@ function setFlag(elCell, i, j) {
 
 function isWin() {
     if (gMineCount === (gBoard.length * gBoard[0].length) - gEmptyCellCounter) {
+        clearInterval(gInterClock);
         var elResetButton = document.querySelector('.restart-button');
         elResetButton.innerText = '😎';
         setTimeout(() => {
@@ -210,6 +219,7 @@ function isWin() {
     return
 }
 function isLost() {
+    clearInterval(gInterClock);
     var elResetButton = document.querySelector('.restart-button');
     elResetButton.innerText = '🥵';
     setTimeout(() => {
@@ -221,12 +231,12 @@ function hint() {
     var elHint = document.querySelector('.hint-button');
     if (gHintCount > 0) {
         gHint = !gHint;
-        if(gHint){
+        if (gHint) {
             elHint.style.backgroundColor = 'lightblue';
             elHint.style.color = 'black';
             return
-        }else{
-            elHint.style.backgroundColor = 'blue';
+        } else {
+            elHint.style.backgroundColor = 'rgb(11, 11, 102)';
             elHint.style.color = 'white';
             return
         }
@@ -258,9 +268,9 @@ function hintPress(elCell, i, j) {
     }
     setTimeout(() => {
         for (var i = 0; i < gBoard.length; i++) {
-            for (var j = 0; j < gBoard[0].length; j++){
-                if(!gBoard[i][j].isCleared){
-                    elCell = document.querySelector('.cell'+i+'-'+j)
+            for (var j = 0; j < gBoard[0].length; j++) {
+                if (!gBoard[i][j].isCleared) {
+                    elCell = document.querySelector('.cell' + i + '-' + j)
                     elCell.innerText = '';
                     elCell.style.backgroundColor = 'brown';
                 }
@@ -271,9 +281,39 @@ function hintPress(elCell, i, j) {
     gHint = !gHint;
     var elHint = document.querySelector('.hint-button');
     elHint.innerText = 'Hint ' + gHintCount;
-    elHint.style.backgroundColor = 'blue';
+    elHint.style.backgroundColor = 'rgb(11, 11, 102)';
     elHint.style.color = 'white';
     render(gBoard)
+}
+
+function clock() {
+    var timeStampA = Date.now();
+    var timeStampB = Date.now();
+    gSec = 0;
+    gTenSec = 0;
+    gMin = 0;
+    gTenMin = 0;
+
+    gInterClock = setInterval(() => {
+        if (timeStampB > timeStampA + 1000) {
+            gSec++;
+            timeStampA = timeStampB;
+        }
+        if (gSec > 9) {
+            gSec = 0;
+            gTenSec++;
+        }
+        if (gTenSec > 5) {
+            gTenSec = 0;
+            gMin++;
+        }
+        if (gMin > 9) {
+            gMin = 0;
+            gTenMin++;
+        }
+        gElTime.innerText = gTenMin + '' + gMin + ':' + gTenSec + '' + gSec;
+        timeStampB = Date.now();
+    }, 25);
 }
 
 function getRandomInt(min, max) {
