@@ -164,7 +164,7 @@ function exposeZeroAround(pos) {
             var cell = gBoard[i][j]
             if (cell.isFlag) continue
             if (pos.i === cell.pos.i && pos.j === cell.pos.j) continue;
-            if (cell.isCleared === true) continue;
+            if (cell.isCleared) continue;
             if (cell.mineCounter === 0) {
                 gEmptyCellCounter++
                 elCell = document.querySelector('.cell' + i + '-' + j);
@@ -269,7 +269,11 @@ function hintPress(elCell, i, j) {
     setTimeout(() => {
         for (var i = 0; i < gBoard.length; i++) {
             for (var j = 0; j < gBoard[0].length; j++) {
-                if (!gBoard[i][j].isCleared) {
+                if (gBoard[i][j].isFlag === true) {
+                    elCell = document.querySelector('.cell' + i + '-' + j)
+                    elCell.innerText = '🚩';
+                    elCell.style.backgroundColor = 'grey';
+                } else if (!gBoard[i][j].isCleared) {
                     elCell = document.querySelector('.cell' + i + '-' + j)
                     elCell.innerText = '';
                     elCell.style.backgroundColor = 'brown';
@@ -277,7 +281,7 @@ function hintPress(elCell, i, j) {
             }
         }
     }, 1000);
-    gHintCount--;
+    if (!gIsFirstClick) gHintCount--;
     gHint = !gHint;
     var elHint = document.querySelector('.hint-button');
     elHint.innerText = 'Hint ' + gHintCount;
