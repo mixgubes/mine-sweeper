@@ -8,19 +8,28 @@
     padding: 15px;
     border: solid;
     border-radius: 25px;
-    min-width: 300px;
+    min-width: 350px;
 
 }
 .screen{
     width: 100%;
     height: 90px;
-
     display: block;
     margin: auto auto;
     margin-top: 20px;
 }
 .restart{
     display: inline-block;
+}
+.time{
+    color: white;
+    padding: 25px 8px;
+    font-size: 30px;
+    float: left;
+    background-color: rgb(11, 11, 102);
+    border: solid;
+    border-radius: 50%;
+    margin-top: -12px;
 }
 .restart-button{
     width: 70px;
@@ -43,6 +52,51 @@
     font-weight: 600;
     cursor: pointer;
 }
+.sub-screen{
+    width: 100%;
+    height: 80px;
+    background-color: rgb(11, 11, 102);
+    border: solid white;
+    border-radius: 10px;
+}
+.mines-remaining{
+    border-right: solid white;
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+.mine-number{
+    margin-top: 15px;
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+}
+.life-remaining{
+    width: fit-content;
+    display: inline-block;
+    margin: auto;
+    font-size: 30px;
+}
+.life-icon{
+    margin-top: 20px;
+}
+.safe-click{
+    border-left: solid white;
+    width: 25%;
+    height: 100%;
+    float: right;
+    color: white;
+    cursor: pointer;
+}
+.safe-icon{
+    margin-top: 5px;
+    font-size: 30px;
+    display: inline-block;
+}
+.safe-number{
+    font-weight: 900;
+    font-size: 25px;
+}
 .board{
     margin-top: 15px;
     width: fit-content;
@@ -61,27 +115,43 @@
     padding: 0px;
     margin: 0px;
 }
-.hint-button{
-    padding: 10px 30px;
-    background-color: rgb(11, 11, 102);
-    width: fit-content;
-    margin: auto;
-    margin-top: 10px;
+.hint{
+    margin-top: 5px;
     border: solid white;
     border-radius: 15px;
+    background-color: rgb(11, 11, 102);
+    text-align: center;
+}
+.hint-button{
+    display: inline-block;
+    padding: 5px;
+    width: fit-content;
+    margin: auto;
     color: white;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 35px;
     cursor: pointer;
+    border-right: solid;
+    border-left: solid;
+    padding-left: 15px;
+    padding-right: 15px;
 }
-
-.time{
+.undo{
+    width: 30%;
+    height: 100%;
     color: white;
-    padding: 25px 8px;
-    font-size: 30px;
     float: left;
-    background-color: rgb(11, 11, 102);
-    border: solid;
-    border-radius: 50%;
-    margin-top: -12px;
+    padding-top: 12px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 900;
+}
+.custom{
+    float: right;
+    width: 27%;
+    height: 50px;
+    margin-top: 7px;
+    font-size: 25px;
+    cursor: pointer;
 }
